@@ -1,18 +1,18 @@
 [
   {
     "id": "1",
-    "title": "夜之歌",
-    "artist": "未知艺术家",
-    "cover": "/assets/night-song.jpg",
-    "status": "下架",
-    "download_url": "https://github.com/你的仓库/releases/download/v1.0/night-song.mp3"
+    "title": "怪兽之歌",
+    "artist": "",
+    "cover": "shino",        
+    "status": "",
+    "download_url": "https://github.com/lm-xiao-fen/lm-xiao-fen.github.io/releases/download/hatsune-miku/hatsune.miku.and.shino-the.song.of.the.monsters.mp3"    
   },
   {
     "id": "2",
-    "title": "晨曦旋律",
-    "artist": "独立音乐人",
-    "cover": "/assets/morning-melody.jpg",
-    "status": "未下架",
-    "download_url": "https://github.com/你的仓库/releases/download/v1.0/morning-melody.mp3"
+    "title": "",
+    "artist": "",
+    "cover": "",
+    "status": "",
+    "download_url": ""  
   }
 ]
