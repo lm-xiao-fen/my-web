@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "title": "夜之歌",
+    "artist": "未知艺术家",
+    "cover": "/assets/night-song.jpg",
+    "status": "下架",
+    "download_url": "https://github.com/你的仓库/releases/download/v1.0/night-song.mp3"
+  },
+  {
+    "id": "2",
+    "title": "晨曦旋律",
+    "artist": "独立音乐人",
+    "cover": "/assets/morning-melody.jpg",
+    "status": "未下架",
+    "download_url": "https://github.com/你的仓库/releases/download/v1.0/morning-melody.mp3"
+  }
+]
