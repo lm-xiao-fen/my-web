@@ -2,7 +2,7 @@
 const OWNER = "lm-xiao-fen"; // GitHub用户名
 const REPO = "music-repo";   // 仓库名
 
-const API_URL = `https://api.github.com/repos/${OWNER}/${REPO}/releases`;
+const API_URL = `https://api.github.com/repos/lm-xiao-fen/lm-xiao-fen.github.io/releases`;
 
 async function fetchReleases() {
     try {
