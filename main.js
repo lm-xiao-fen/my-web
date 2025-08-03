@@ -1,6 +1,6 @@
 const OWNER = "lm-xiao-fen";
 const REPO = "lm-xiao-fen.github.io";
-const API_URL = `https://api.github.com/repos/${OWNER}/${REPO}/releases`;
+const API_URL = `https://api.github.com/repos/lm-xiao-fen/lm-xiao-fen.github.io/releases`;              
 
 async function fetchReleases() {
     try {
