@@ -27,7 +27,7 @@ function renderSongs(releases) {
 
             // 显示发行版（专辑）名
             const albumTitle = document.createElement('h3');
-            albumTitle.textContent = `专辑：${release.name || release.tag_name}`;
+            albumTitle.textContent = 歌曲名：${release.name || release.tag_name}`;
             container.appendChild(albumTitle);
 
             // 发行版说明
@@ -53,7 +53,7 @@ function renderSongs(releases) {
 
                 const artist = document.createElement('span');
                 artist.className = 'song-artist';
-                artist.textContent = `版本：${release.tag_name}`;
+                artist.textContent = `release tag：${release.tag_name}`;
 
                 info.appendChild(title);
                 info.appendChild(artist);
