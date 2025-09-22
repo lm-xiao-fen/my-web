@@ -1,3 +1,4 @@
+## [废稿存放]
 # gh-pages-old of lm-xiao-fen.github.io
 ## 关于这个分支
 - 这个分支是最开始的网站版本
