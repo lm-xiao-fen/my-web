@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTC时间</title>
+</head>
+<body>
+    <h1>UTC时间</h1>
+    <div>
+        <p id="utc-time" style="font-size: 48px; font-weight: bold;">00:00</p>
+    </div>
+
+    <script>
+        function updateUTCClock() {
+            const now = new Date();
+            
+            // 获取UTC小时和分钟
+            const hours = now.getUTCHours().toString().padStart(2, '0');
+            const minutes = now.getUTCMinutes().toString().padStart(2, '0');
+            
+            // 更新显示
+            document.getElementById('utc-time').textContent = `${hours}:${minutes}`;
+        }
+        
+        // 初始更新
+        updateUTCClock();
+        
+        // 每秒更新一次
+        setInterval(updateUTCClock, 1000);
+    </script>
+</body>
+</html>
