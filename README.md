@@ -1,5 +1,5 @@
 ## [废稿存放]
-# gh-pages-old-version of lm-xiao-fen.github.io
+# gh-pages-old-version of my-web
 ## 关于这个分支
 - 如名字所言这里存放这被废弃的html文件(也可能是其他语言)
 - 在这个仓库里被废除的统一压缩成一个文件后存放在这个分支
