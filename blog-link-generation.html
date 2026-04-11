@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>HTML 模板生成器</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+    }
+
+    body {
+      background: #0d1117;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      color: #c9d1d9;
+    }
+
+    .generator-card {
+      max-width: 780px;
+      width: 100%;
+      background: #161b22;
+      border-radius: 12px;
+      border: 1px solid #30363d;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      padding: 28px 32px 32px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #f0f6fc;
+      border-bottom: 1px solid #21262d;
+      padding-bottom: 16px;
+    }
+
+    .subhead {
+      color: #8b949e;
+      margin: 18px 0 24px;
+      font-size: 0.95rem;
+      border-left: 3px solid #f0883e;
+      padding-left: 16px;
+    }
+
+    .input-section {
+      background: #0d1117;
+      border-radius: 10px;
+      padding: 4px 0 8px;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 24px;
+      margin-bottom: 28px;
+    }
+
+    @media (max-width: 600px) {
+      .field-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .generator-card {
+        padding: 20px 18px;
+      }
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .field-group.full-width {
+      grid-column: span 2;
+    }
+
+    @media (max-width: 600px) {
+      .field-group.full-width {
+        grid-column: span 1;
+      }
+    }
+
+    label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      color: #c9d1d9;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    label i {
+      font-weight: 400;
+      color: #8b949e;
+      text-transform: none;
+      font-style: normal;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px 14px;
+      font-size: 0.95rem;
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      color: #c9d1d9;
+      transition: border 0.15s, box-shadow 0.15s;
+      font-family: inherit;
+      line-height: 1.5;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #f0883e;
+      box-shadow: 0 0 0 3px rgba(240, 136, 62, 0.2);
+      background: #0d1117;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #6e7681;
+      opacity: 0.7;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+      margin-bottom: 32px;
+      align-items: center;
+    }
+
+    .btn {
+      background: #21262d;
+      border: 1px solid #30363d;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #c9d1d9;
+      cursor: pointer;
+      transition: all 0.12s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+    }
+
+    .btn-primary {
+      background: #238636;
+      border-color: #2ea043;
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: #2ea043;
+      border-color: #3fb950;
+    }
+
+    .btn-outline {
+      background: #161b22;
+      border-color: #30363d;
+    }
+
+    .btn-outline:hover {
+      background: #21262d;
+      border-color: #8b949e;
+    }
+
+    .btn-sm {
+      padding: 8px 14px;
+      font-size: 0.85rem;
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .code-header h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #f0f6fc;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .copy-btn {
+      background: #21262d;
+      border: 1px solid #30363d;
+      color: #c9d1d9;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .copy-btn:hover {
+      background: #30363d;
+      border-color: #8b949e;
+      color: #f0f6fc;
+    }
+
+    .code-block {
+      background: #0d1117;
+      border-radius: 6px;
+      padding: 18px 16px;
+      overflow-x: auto;
+      border: 1px solid #30363d;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    .code-block pre {
+      margin: 0;
+      color: #e6edf3;
+      font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', 'Courier New', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-all;
+      tab-size: 4;
+    }
+
+    .toast-msg {
+      font-size: 0.75rem;
+      color: #7ee787;
+      background: #12271e;
+      padding: 4px 12px;
+      border-radius: 30px;
+      border: 1px solid #238636;
+      opacity: 0;
+      transition: opacity 0.2s;
+      margin-left: 12px;
+    }
+
+    .footer-note {
+      margin-top: 20px;
+      font-size: 0.75rem;
+      color: #8b949e;
+      text-align: right;
+      border-top: 1px solid #21262d;
+      padding-top: 16px;
+    }
+  </style>
+</head>
+<body>
+<div class="generator-card">
+   <h1>
+     <span><a href="https://www.example.com">返回友链</a></span>
+     HTML 模板生成器
+    </h1>
+  <div class="subhead">
+    填入信息 → 生成与最初模板完全一致的 HTML 代码
+  </div>
+
+  <!-- 输入区域 -->
+  <div class="input-section">
+    <div class="field-grid">
+      <div class="field-group">
+        <label>网站名称</label>
+        <input type="text" id="siteName" placeholder="xf_blog" value="" maxlength="40">
+      </div>
+      <div class="field-group">
+        <label>头像URL</label>
+        <input type="url" id="avatarUrl" placeholder="图片链接" value="">
+      </div>
+      <div class="field-group">
+        <label>网站链接</label>
+        <input type="url" id="siteLink" placeholder="https://lm-xiao-fen.github.io" value="">
+      </div>
+      <div class="field-group full-width">
+        <label>网站描述 / 签名</label>
+        <textarea id="siteDesc" placeholder="立志用 cloudflare workers，GitHub pages 和 vercel 做出整个互联网的up（虽然不会成功"></textarea>
+      </div>
+    </div>
+
+    <div class="action-bar">
+      <button class="btn btn-primary" id="fillExampleBtn" type="button">载入示例</button>
+      <button class="btn btn-outline btn-sm" id="clearFieldsBtn" type="button">清空字段</button>
+      <span style="flex:1"></span>
+      <span class="toast-msg" id="copyFeedback">已复制到剪贴板</span>
+    </div>
+  </div>
+
+  <!-- 代码输出区 -->
+  <div>
+    <div class="code-header">
+      <h3>生成的 HTML 模板</h3>
+      <button class="copy-btn" id="copyCodeBtn" title="复制代码">
+        复制代码
+      </button>
+    </div>
+    <div class="code-block">
+      <pre id="codeOutput"></pre>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    * 代码包含 &lt;img&gt; (32x32) + 带链接名称 + &lt;em&gt; 描述
+  </div>
+</div>
+
+<script>
+  (function(){
+    "use strict";
+
+    const siteNameInput = document.getElementById('siteName');
+    const avatarUrlInput = document.getElementById('avatarUrl');
+    const siteLinkInput = document.getElementById('siteLink');
+    const siteDescInput = document.getElementById('siteDesc');
+    
+    const codeOutput = document.getElementById('codeOutput');
+    const copyBtn = document.getElementById('copyCodeBtn');
+    const copyFeedback = document.getElementById('copyFeedback');
+    const fillExampleBtn = document.getElementById('fillExampleBtn');
+    const clearFieldsBtn = document.getElementById('clearFieldsBtn');
+
+    // 默认头像 (简约SVG，尺寸32x32)
+    const DEFAULT_AVATAR = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2321262d' stroke='%2330363d' stroke-width='1'/%3E%3Ccircle cx='16' cy='12' r='4' fill='%238b949e'/%3E%3Cpath d='M8 24 Q12 19 16 19 Q20 19 24 24' stroke='%238b949e' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E";
+
+    // 工具：转义 HTML 属性
+    const escapeAttr = (text) => String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    // 转义普通文本内容 (用于标签之间)
+    const escapeHtml = (text) => String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+    const getFormData = () => {
+      let name = siteNameInput.value.trim();
+      let avatar = avatarUrlInput.value.trim();
+      let link = siteLinkInput.value.trim();
+      let desc = siteDescInput.value.trim();
+      if (name === '') name = '未命名';
+      return { name, avatar, link, desc };
+    };
+
+    // 生成原始 HTML 模板 (完全符合最初格式)
+    const generateHtml = (data) => {
+      const { name, avatar, link, desc } = data;
+      const avatarSrc = avatar ? escapeAttr(avatar) : DEFAULT_AVATAR;
+      const altText = escapeAttr(name) + '的头像';
+      const nameDisplay = escapeHtml(name);
+      const descText = escapeHtml(desc);
+      
+      let html = `<img src="${avatarSrc}" alt="${altText}" width="32" height="32">\n`;
+      if (link) {
+        html += `[${nameDisplay}](${escapeAttr(link)})\n`
+      } else {
+        html += `${nameDisplay}\n`;
+        html += `<br>`;
+      }
+       html += `*${descText}*\n`;
+      return html;
+    };
+
+    const updateOutput = () => {
+      const data = getFormData();
+      codeOutput.textContent = generateHtml(data);
+    };
+
+    const copyCode = async () => {
+      try {
+        await navigator.clipboard.writeText(codeOutput.textContent);
+        copyFeedback.style.opacity = '1';
+        setTimeout(() => copyFeedback.style.opacity = '0', 2000);
+      } catch (err) {
+        alert('复制失败，请手动复制');
+      }
+    };
+
+    const fillExample = () => {
+      siteNameInput.value = 'xf_blog';
+      avatarUrlInput.value = 'https://github.com/lm-xiao-fen/lm-xiao-fen.github.io/blob/main/image/MEITU_20260128_220225596.jpg?raw=true';
+      siteLinkInput.value = 'https://lm-xiao-fen.github.io';
+      siteDescInput.value = '立志用 cloudflare workers，GitHub pages 和 vercel 做出整个互联网的up（虽然不会成功';
+      updateOutput();
+    };
+
+    const clearFields = () => {
+      siteNameInput.value = '';
+      avatarUrlInput.value = '';
+      siteLinkInput.value = '';
+      siteDescInput.value = '';
+      updateOutput();
+    };
+
+    const init = () => {
+      updateOutput();
+      
+      siteNameInput.addEventListener('input', updateOutput);
+      avatarUrlInput.addEventListener('input', updateOutput);
+      siteLinkInput.addEventListener('input', updateOutput);
+      siteDescInput.addEventListener('input', updateOutput);
+      
+      fillExampleBtn.addEventListener('click', fillExample);
+      clearFieldsBtn.addEventListener('click', clearFields);
+      copyBtn.addEventListener('click', copyCode);
+      
+      copyFeedback.style.opacity = '0';
+    };
+
+    init();
+  })();
+</script>
+</body>
+</html>
