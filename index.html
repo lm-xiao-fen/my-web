@@ -1,165 +1,218 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>副站 xf_blog</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>副站 xf_blog</title>
+    <style>
+      :root {
+        --bg: #0d1117;
+        --panel: #161b22;
+        --text: #c9d1d9;
+        --muted: #8b949e;
+        --link: #58a6ff;
+        --border: #30363d;
+      }
 
-  <style>
-    :root {
-      --bg: #0d1117;
-      --panel: #161b22;
-      --text: #c9d1d9;
-      --muted: #8b949e;
-      --link: #58a6ff;
-      --border: #30363d;
-    }
+      * {
+        box-sizing: border-box;
+      }
 
-    * {
-      box-sizing: border-box;
-    }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                   Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+      .container {
+        width: 100%;
+        max-width: 720px;
+        padding: 32px 20px;
+      }
 
-    .container {
-      width: 100%;
-      max-width: 720px;
-      padding: 32px 20px;
-    }
+      h1 {
+        margin-top: 0;
+        font-size: 1.6rem;
+      }
 
-    h1 {
-      margin-top: 0;
-      font-size: 1.6rem;
-    }
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 24px;
+        margin-bottom: 20px;
+      }
 
-    .card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 24px;
-      margin-bottom: 20px;
-    }
+      .utc-time {
+        font-size: 56px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-align: center;
+        margin: 12px 0;
+      }
 
-    .utc-time {
-      font-size: 56px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-align: center;
-      margin: 12px 0;
-    }
+      .time-tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 16px;
+      }
 
-    a {
-      color: var(--link);
-      text-decoration: none;
-    }
+      .time-tabs button {
+        background: var(--border);
+        border: none;
+        color: var(--muted);
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+      }
 
-    a:hover {
-      text-decoration: underline;
-    }
+      .time-tabs button:hover {
+        color: var(--text);
+      }
 
-    .links p {
-      margin: 0;
-      padding: 8px 0;
-    }
+      .time-tabs button.active {
+        background: var(--link);
+        color: #fff;
+      }
 
-    footer {
-      margin-top: auto;
-      padding: 20px 0;
-      font-size: 0.9rem;
-      color: var(--muted);
-      text-align: center;
-    }
+      .time-display {
+        display: none;
+      }
 
-    footer img {
-      vertical-align: middle;
-      margin-right: 6px;
-    }
-  </style>
-</head>
+      .time-display.active {
+        display: block;
+      }
 
-<body>
+      a {
+        color: var(--link);
+        text-decoration: none;
+      }
 
-  <div class="container">
+      a:hover {
+        text-decoration: underline;
+      }
 
-    <div class="card">
-  <h1>关于本站</h1>
-  <p>
-    这是 <strong>lm-xiao-fen</strong> 的个人副站，
-    用于放置一些 <strong>小工具 / 实验页面 / 临时项目</strong>
-  </p>
+      .links p {
+        margin: 0;
+        padding: 8px 0;
+      }
 
-  <p>
-    本站不依赖任何框架，使用原生
-    <strong>HTML + CSS + JavaScript</strong> 构建，
-    主要用于练习与功能展示
-  </p>
+      footer {
+        margin-top: auto;
+        padding: 20px 0;
+        font-size: 0.9rem;
+        color: var(--muted);
+        text-align: center;
+      }
 
-  <p>
-    正式博客与技术文章请访问：
-    <a href="https://lm-xiao-fen.github.io/">主站 xf_blog</a>
-  </p>
-</div>
+      footer img {
+        vertical-align: middle;
+        margin-right: 6px;
+      }
+    </style>
+  </head>
 
-    <div class="card">
-      <h1>UTC 时间</h1>
-      <div id="utc-time" class="utc-time">00:00</div>
+  <body>
+    <div class="container">
+      <div class="card">
+        <h1>关于本站</h1>
+        <p>
+          这是 <strong>lm-xiao-fen</strong> 的个人副站， 用于放置一些
+          <strong>小工具 / 实验页面 / 临时项目</strong>
+        </p>
+
+        <p>
+          本站不依赖任何框架，使用原生
+          <strong>HTML + CSS + JavaScript</strong> 构建， 主要用于练习与功能展示
+        </p>
+
+        <p>
+          正式博客与技术文章请访问：
+          <a href="https://lm-xiao-fen.github.io/">主站 xf_blog</a>
+        </p>
+      </div>
+
+      <div class="card">
+        <h1>时钟</h1>
+        <div class="time-tabs">
+          <button class="active" onclick="switchTime('utc')">UTC</button>
+          <button onclick="switchTime('cst')">东八区</button>
+        </div>
+        <div id="utc-display" class="time-display active">
+          <div id="utc-time" class="utc-time">00:00</div>
+        </div>
+        <div id="cst-display" class="time-display">
+          <div id="cst-time" class="utc-time">00:00</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h1>正式项目</h1>
+
+        <p>
+          <a href="https://mikufans.qzz.io"> VICP(虚拟备案系统) </a>
+        </p>
+
+        <p>
+          <a href="songs_download.html"> 术曲下载 </a>
+        </p>
+      </div>
     </div>
 
-    <div class="card"> 
-     <h1>正式项目</h1>
-      
-     <p>
-        <a href="https://mikufans.qzz.io">
-          VICP(虚拟备案系统)
-        </a>
-     </p>   
-
+    <footer>
+      <p>© xf_blog</p>
       <p>
-        <a href="blog-link-generation.html">
-          博客链接生成器
-        </a>
+        <a href="https://mikufans.qzz.io"> VICP-T6JGPJNE </a>
       </p>
+    </footer>
 
-      <p>
-        <a href="songs_download.html">
-          术曲下载
-        </a>
-      </p>
-     </div>
+    <script>
+      function updateClocks() {
+        const now = new Date();
+        const utcHours = now.getUTCHours().toString().padStart(2, "0");
+        const utcMinutes = now.getUTCMinutes().toString().padStart(2, "0");
+        document.getElementById("utc-time").textContent =
+          `${utcHours}:${utcMinutes}`;
 
-  </div>
+        const cstHours = now.getHours().toString().padStart(2, "0");
+        const cstMinutes = now.getMinutes().toString().padStart(2, "0");
+        document.getElementById("cst-time").textContent =
+          `${cstHours}:${cstMinutes}`;
+      }
 
-  <footer>
-    <p>© xf_blog</p>
-    <p>
-        <a href="https://mikufans.qzz.io">
-         VICP-T6JGPJNE
-        </a>
-    </p>
-  </footer>
+      function switchTime(type) {
+        document
+          .querySelectorAll(".time-tabs button")
+          .forEach((btn) => btn.classList.remove("active"));
+        document
+          .querySelectorAll(".time-display")
+          .forEach((display) => display.classList.remove("active"));
 
-  <script>
-    function updateUTCClock() {
-      const now = new Date();
-      const hours = now.getUTCHours().toString().padStart(2, '0');
-      const minutes = now.getUTCMinutes().toString().padStart(2, '0');
-      document.getElementById('utc-time').textContent = `${hours}:${minutes}`;
-    }
+        if (type === "utc") {
+          document
+            .querySelector(".time-tabs button:first-child")
+            .classList.add("active");
+          document.getElementById("utc-display").classList.add("active");
+        } else {
+          document
+            .querySelector(".time-tabs button:last-child")
+            .classList.add("active");
+          document.getElementById("cst-display").classList.add("active");
+        }
+      }
 
-    updateUTCClock();
-    setInterval(updateUTCClock, 1000);
-  </script>
-
-</body>
+      updateClocks();
+      setInterval(updateClocks, 1000);
+    </script>
+  </body>
 </html>
